@@ -30,7 +30,9 @@ public class UserController {
     @GetMapping("/profile/{pId}")
     public String userProfile(Model model, @PathVariable long pId) {
         System.out.println("profile complete!");
-        model.addAttribute("user",userRepository.findById(pId).get());
+        model.addAttribute("user", userRepository.findById(pId));
+        System.out.println("findById: " + userRepository.findById(pId));
+        System.out.println("findById.get(): " + userRepository.findById(pId).get());
         System.out.println(model);
         return "/user/profile";
     }
@@ -46,13 +48,13 @@ public class UserController {
     }
 
     @GetMapping("/{pId}/form")
-    private String userUpdateForm(Model model, @PathVariable long pId){
-        model.addAttribute("user",userRepository.findById(pId).get());
+    private String userUpdateForm(Model model, @PathVariable long pId) {
+        model.addAttribute("user", userRepository.findById(pId).get());
         return "/user/updateForm";
     }
 
     @PutMapping("/{pId}/update")
-    private String userUpdate(User newUser, @PathVariable long pId){
+    private String userUpdate(User newUser, @PathVariable long pId) {
         User user = userRepository.findById(pId).get();
         user.update(newUser);
         userRepository.save(user);
